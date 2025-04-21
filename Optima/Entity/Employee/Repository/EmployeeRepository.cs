@@ -1,6 +1,13 @@
-﻿namespace Optima.Entity.Employee.Repository;
+﻿using Optima.Base.Repository;
+using Optima.Base;
+using Optima.Configuration;
 
-public class EmployeeRepository
+namespace Optima.Entity.Employee.Repository;
+
+public class EmployeeRepository<TDocument> : BaseDataRepository<TDocument>, IEmployeeRepository<TDocument> where TDocument : BaseData
 {
+    public EmployeeRepository(AppDbContext  databaseConfiguration) : base(databaseConfiguration)
+    {
+    }
     
 }

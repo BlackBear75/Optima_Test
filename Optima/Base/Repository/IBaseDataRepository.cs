@@ -1,6 +1,36 @@
-﻿namespace Optima.Base.Repository;
+﻿using System.Linq.Expressions;
 
-public interface IBaseDataRepository
+namespace Optima.Base.Repository;
+
+public interface IBaseDataRepository<TDocument> where TDocument : BaseData
 {
-    
+    IQueryable<TDocument> Query();
+    Task<IEnumerable<TDocument>> GetAllAsync();
+    Task<TDocument> FindByIdAsync(Guid id);
+    Task InsertOneAsync(TDocument document);
+    Task UpdateOneAsync(TDocument document);
+    Task DeleteOneAsync(Guid id);
+    Task <string> GetConnectionString();
+    Task<IEnumerable<TDocument>> GetWithSkipAsync(int skip, int take); 
+    Task<IEnumerable<TDocument>> FilterByAsync(Expression<Func<TDocument, bool>> filterExpression);
+
+    Task<IEnumerable<TDocument>> SortFilterBySkipAsync(
+        Expression<Func<TDocument, bool>> filterExpression,
+        Expression<Func<TDocument, object>> sortField,
+        bool ascending,
+        int skip,
+        int take);
+    Task<IEnumerable<TDocument>> FilterBySkipAsync(Expression<Func<TDocument, bool>> filterExpression, int skip,
+        int take);
+    Task<int> CountAsync(Expression<Func<TDocument, bool>> filterExpression);
+
+    Task<TDocument> FindOneAsync(Expression<Func<TDocument, bool>> filterExpression);
+    Task<bool> ExistsAsync(Expression<Func<TDocument, bool>> filterExpression);
+    Task UpdateManyAsync(Expression<Func<TDocument, bool>> filterExpression, Action<TDocument> updateAction);
+    Task DeleteManyAsync(Expression<Func<TDocument, bool>> filterExpression);
+    void Detach(TDocument document);
+
+
+
+
 }

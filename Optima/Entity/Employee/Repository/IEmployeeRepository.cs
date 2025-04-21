@@ -1,6 +1,10 @@
-﻿namespace Optima.Entity.Employee.Repository;
+﻿
+using Optima.Base;
+using Optima.Base.Repository;
 
-public interface IEmployeeRepository
+namespace Optima.Entity.Employee.Repository;
+
+public interface IEmployeeRepository<TDocument> : IBaseDataRepository<TDocument> where TDocument : BaseData
 {
-    
+   
 }
